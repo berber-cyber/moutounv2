@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075b49">
+
+<title>الأذكار والآداب</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="top">
+
+<div class="logo">
+
+<div class="logo-icon">📖</div>
+
+<div>
+<h1>الأذكار والآداب</h1>
+<p>للشيخ عبد المحسن القاسم</p>
+</div>
+
+</div>
+
+<button class="theme" onclick="toggleDark()">🌙</button>
+
+</div>
+
+<div class="hero">
+
+<h2>السلام عليكم ورحمة الله وبركاته👋</h2>
+
+<p>
+تصفح الأبواب وتابع حفظك بسهولة
+</p>
+
+</div>
+
+<div class="search">
+
+<span>⌕</span>
+
+<input
+id="searchInput"
+type="search"
+placeholder="ابحث عن موضوع..."
+oninput="search()">
+
+</div>
+
+<div class="search-tools">
+<button type="button" onclick="clearSearch()" aria-label="مسح البحث" title="مسح البحث">✕</button>
+<button type="button" onclick="showAdvancedSearch()" aria-label="خيارات البحث" title="خيارات البحث" aria-expanded="false" id="advancedSearchToggle">⚙️</button>
+</div>
+<div id="advancedSearchPanel" class="advanced-search-panel" hidden>
+  <label for="searchField">ابحث في</label>
+  <select id="searchField" onchange="search()">
+    <option value="all">العناوين والنصوص والأبواب</option>
+    <option value="title">عناوين الموضوعات فقط</option>
+    <option value="text">نصوص المتون فقط</option>
+    <option value="category">أسماء الأبواب والأقسام</option>
+  </select>
+  <label for="searchFilter">تصفية النتائج</label>
+  <select id="searchFilter" onchange="search()">
+    <option value="all">كل الموضوعات</option>
+    <option value="saved">الموضوعات المحفوظة</option>
+    <option value="favorites">المفضلة</option>
+    <option value="bookmarks">العلامات المرجعية</option>
+    <option value="due">المستحقة للمراجعة</option>
+  </select>
+</div>
+
+</div>
+
+<div id="continueReading" class="continue-reading" hidden></div>
+
+</div>
+
+</header>
+
+<main>
+
+<!-- الرئيسية -->
+
+<section id="home" class="page active">
+
+<div class="stats">
+
+<div class="stat">
+<div class="icon">📚</div>
+<strong id="total">142</strong>
+<small>موضوعًا</small>
+</div>
+
+<div class="stat">
+<div class="icon">🧠</div>
+<strong id="saved">0</strong>
+<small>محفوظ</small>
+</div>
+
+<div class="stat">
+<div class="icon">❤️</div>
+<strong id="fav">0</strong>
+<small>مفضلة</small>
+</div>
+
+</div>
+
+<div id="book"></div>
+
+<!-- رحلة الحفظ بمؤشر دائري -->
+<div id="journeyProgress" class="progress-container journey-card">
+  <div class="journey-heading">
+    <div class="journey-emblem" aria-hidden="true"><span>م</span></div>
+    <div class="journey-heading-text">
+      <p class="journey-kicker">رِحْلَةُ التَّعَلُّمِ وَالإِتْقَان</p>
+      <h3>رحلتك مع متن الأذكار والآداب</h3>
+      <p class="journey-subtitle">خطوةٌ في العلم، وأثرٌ يبقى بإذن الله</p>
+    </div>
+    <div class="progress-badge" id="percentBadge">0% منجز</div>
+  </div>
+
+  <div class="journey-main">
+    <div class="journey-arch" aria-label="نسبة إتمام الحفظ">
+      <div class="journey-arch-inner">
+        <strong id="archPercent">0%</strong>
+        <small>منجز</small>
+      </div>
+    </div>
+    <div class="journey-details">
+      <div class="hadith-panel">
+        <p class="hadith-attribution">قال النبي صلى الله عليه وسلم:</p>
+        <p class="hadith-text">«نَضَّرَ اللَّهُ امْرَأً سَمِعَ مَقَالَتِي فَوَعَاهَا وَحَفِظَهَا وَأَدَّاهَا كَمَا سَمِعَهَا، فَرُبَّ حَامِلِ فِقْهٍ إِلَى مَنْ هُوَ أَفْقَهُ مِنْهُ، وَرُبَّ حَامِلِ فِقْهٍ لَيْسَ بِفَقِيهٍ»</p>
+      </div>
+      <div class="journey-progress-labels"><span id="progressMotivation">ابدأ رحلتك المباركة، وكل خطوة لها أثر.</span><strong id="savedCountText">0 / 142 موضوعًا</strong></div>
+      <div class="progress-bar-wrap journey-bar"><div id="fill" class="progress-fill-bar"></div></div>
+      <div class="journey-small-note">واصل، فكل بابٍ تتعلمه خطوةٌ في طريق العلم</div>
+    </div>
+  </div>
+
+  <div class="stages-heading"><h4>مراحل رحلتك في الكتاب</h4></div>
+  <div class="journey-stages" id="journeyStages">
+    <div class="journey-stage" data-stage="1" data-start="1" data-end="11"><span class="stage-number">١</span><b>المرحلة الأولى</b><small>بداية الكتاب ص (٩) — الوسوسة في الصلاة ص (٣٣)</small></div>
+    <div class="journey-stage" data-stage="2" data-start="12" data-end="20"><span class="stage-number">٢</span><b>المرحلة الثانية</b><small>الركوع ص (٣٤) — الاستخارة ص (٥٢)</small></div>
+    <div class="journey-stage" data-stage="3" data-start="21" data-end="37"><span class="stage-number">٣</span><b>المرحلة الثالثة</b><small>المرض ص (٥٣) — الرجوع من السفر ص (٧٨)</small></div>
+    <div class="journey-stage" data-stage="4" data-start="38" data-end="52"><span class="stage-number">٤</span><b>المرحلة الرابعة</b><small>الحج ص (٧٩) — ما يقول إذا أتى أهله ص (١٠١)</small></div>
+    <div class="journey-stage" data-stage="5" data-start="53" data-end="59"><span class="stage-number">٥</span><b>المرحلة الخامسة</b><small>الليل والنوم ص (١٠٣) — تعويذ الأولاد ص (١٢٩)</small></div>
+    <div class="journey-stage" data-stage="6" data-start="60" data-end="78"><span class="stage-number">٦</span><b>المرحلة السادسة</b><small>أذكار عامة ص (١٣١) — كفارة المجلس ص (١٥٣)</small></div>
+    <div class="journey-stage" data-stage="7" data-start="79" data-end="90"><span class="stage-number">٧</span><b>المرحلة السابعة</b><small>قسم الآداب ص (١٥٥) — عيادة المريض ص (١٧٧)</small></div>
+    <div class="journey-stage" data-stage="8" data-start="91" data-end="104"><span class="stage-number">٨</span><b>المرحلة الثامنة</b><small>النظافة ص (١٧٩) — الفراغ من الأكل والشرب ص (١٩٩)</small></div>
+    <div class="journey-stage" data-stage="9" data-start="105" data-end="121"><span class="stage-number">٩</span><b>المرحلة التاسعة</b><small>العشرة ص (٢٠١) — الكذب لإضحاك الناس ص (٢٢٣)</small></div>
+    <div class="journey-stage" data-stage="10" data-start="122" data-end="142"><span class="stage-number">١٠</span><b>المرحلة العاشرة</b><small>الأخلاق ص (٢٢٥) — نهاية الكتاب ص (٢٥٠)</small></div>
+  </div>
+</div>
+</section>
+
+<!-- الموضوع -->
+
+<section id="topicPage" class="page">
+
+<button class="back" onclick="home()">
+→ العودة إلى الفهرس
+</button>
+
+<div id="topicHead" class="topic-head"></div>
+
+<div class="topic-box">
+
+<div class="book-label">نَصُّ المَتْنِ</div>
+<div id="topicText" class="text"></div>
+
+<div class="reading-tools" aria-label="أدوات القراءة">
+<button type="button" onclick="changeFontSize(-1)" aria-label="تصغير الخط">A−</button>
+<span id="fontSizeLabel">حجم الخط</span>
+<button type="button" onclick="changeFontSize(1)" aria-label="تكبير الخط">A+</button>
+<button type="button" onclick="copyTopic()">📋 نسخ</button>
+<button type="button" onclick="shareTopic()">↗ مشاركة</button>
+<button type="button" id="readingModeToggle" onclick="toggleReadingMode()" aria-pressed="false">☷ وضع القراءة</button>
+</div>
+
+<div id="audioPlayer" class="audio-player" hidden>
+<div id="audioFileNote" class="audio-file-note">ملف هذا الباب: <code>audio/1.mp3</code></div>
+<div class="audio-title">🔊 الاستماع</div>
+<div class="audio-controls">
+<button type="button" id="audioPlayBtn" onclick="toggleAudio()">▶ سماع الحديث</button>
+<button type="button" id="audioStopBtn" onclick="stopAudio()">■ إيقاف</button>
+<label>السرعة <select id="audioSpeed" onchange="changeAudioSpeed()"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+<label class="repeat-control">التكرار <select id="repeatCount" onchange="changeRepeatCount()"><option value="1">مرة واحدة</option><option value="3">3 مرات</option><option value="5">5 مرات</option><option value="10">10 مرات</option><option value="0">∞ مستمر</option></select></label>
+<label class="check-control"><input type="checkbox" id="autoNext" checked> التالي تلقائيًا</label>
+</div>
+<audio id="audioElement" controls preload="metadata"></audio>
+<div class="audio-progress-text" id="audioProgressText">لم يبدأ الاستماع بعد</div>
+</div>
+
+<div class="actions">
+
+<button
+id="favoriteBtn"
+class="action"
+onclick="toggleFavorite()">
+♡ إضافة للمفضلة
+</button>
+
+<button
+id="saveBtn"
+class="action primary"
+onclick="toggleSave()">
+🧠 أضف للحفظ
+</button>
+
+<button
+id="bookmarkBtn"
+class="action"
+onclick="toggleBookmark()">
+🔖 إضافة علامة مرجعية
+</button>
+
+<button
+class="action"
+onclick="memoryTest()">
+🎯 اختبار الحفظ
+</button>
+
+<button
+class="action"
+onclick="playAudio()">
+🔊 استماع
+</button>
+
+</div>
+
+<!-- أسهم التنقل في أسفل كل باب -->
+<div class="section-nav-buttons" aria-label="التنقل بين الأبواب">
+    <button type="button" class="section-nav-btn" onclick="navigateTopic(-1)" aria-label="الانتقال إلى الباب السابق">
+        <span class="nav-arrow">←</span>
+        <span>الباب السابق</span>
+    </button>
+    <button type="button" class="section-nav-btn" onclick="navigateTopic(1)" aria-label="الانتقال إلى الباب التالي">
+        <span>الباب التالي</span>
+        <span class="nav-arrow">→</span>
+    </button>
+</div>
+
+</div>
+
+</section>
+
+<!-- البحث -->
+
+<section id="searchPage" class="page">
+
+<button class="back" onclick="home()">
+→ العودة
+</button>
+
+<h2 style="font-size:18px;margin-bottom:14px">
+🔎 نتائج البحث
+</h2>
+<div id="searchSummary" class="search-summary"></div>
+<div id="results"></div>
+
+</section>
+
+<!-- المفضلة -->
+
+<section id="favoritesPage" class="page">
+
+<h2 style="font-size:18px;margin-bottom:14px">
+❤️ المفضلة
+</h2>
+
+<div id="favorites"></div>
+
+</section>
+
+<!-- العلامات المرجعية -->
+
+<section id="bookmarksPage" class="page">
+<h2 style="font-size:18px;margin-bottom:14px">🔖 العلامات المرجعية</h2>
+<div id="bookmarks"></div>
+</section>
+
+<!-- الحفظ -->
+
+<section id="memoryPage" class="page">
+
+<h2 style="font-size:18px;margin-bottom:14px">
+🧠 الحفظ والمراجعة
+</h2>
+
+<div id="memory"></div>
+
+</section>
+
+</main>
+
+<!-- NAV -->
+
+<div class="bottom">
+
+<div class="nav">
+
+<button id="homeNav" class="active" onclick="home()">
+<span>⌂</span>
+الرئيسية
+</button>
+
+<button onclick="home()">
+<span>📚</span>
+الفهرس
+</button>
+
+<button id="favNav" onclick="showFavorites()">
+<span>♡</span>
+المفضلة
+</button>
+
+<button type="button" id="progressNav" onclick="document.getElementById('journeyProgress').scrollIntoView({behavior:'smooth',block:'start'})">
+<span>◉</span>
+التقدم
+</button>
+
+<button id="bookmarkNav" onclick="showBookmarks()">
+<span>🔖</span>
+العلامات
+</button>
+
+<button id="memoryNav" onclick="showMemory()">
+<span>🧠</span>
+الحفظ
+</button>
+
+</div>
+
+</div>
+
+    <button type="button" id="exitReadingMode" class="exit-reading-mode" onclick="toggleReadingMode(false)" hidden>✕ إنهاء وضع القراءة</button>
+    <section id="memoryQuiz" class="quiz-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+      <div class="quiz-card">
+        <button type="button" class="quiz-close" onclick="closeMemoryTest()" aria-label="إغلاق الاختبار">×</button>
+        <p class="quiz-kicker">اختبار الاستذكار</p>
+        <h2 id="quizTitle">هل تتذكر النص؟</h2>
+        <p id="quizTopicName" class="quiz-topic-name"></p>
+        <p class="quiz-prompt">حاول استحضار المتن من ذاكرتك قبل إظهار الإجابة.</p>
+        <div id="quizAnswer" class="quiz-answer" hidden></div>
+        <button type="button" id="revealAnswerBtn" class="action primary quiz-reveal" onclick="revealMemoryAnswer()">إظهار الإجابة</button>
+        <div id="quizGradeControls" class="quiz-grade-controls" hidden>
+          <p>كيف كان استذكارك؟</p>
+          <button type="button" class="action quiz-easy" onclick="gradeMemoryTest(true)">أتقنت النص</button>
+          <button type="button" class="action quiz-hard" onclick="gradeMemoryTest(false)">أحتاج إلى مراجعة</button>
+        </div>
+      </div>
+    </section>
+    <script src="script.js" defer></script>
+</body>
+</html>
+<!-- Audio files are expected as audio/1.mp3 ... audio/142.mp3 -->
