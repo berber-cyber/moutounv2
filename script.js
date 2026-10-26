@@ -965,7 +965,7 @@ function showBookmarks() {
 
 function updateAudioFileNote(){
     const el=document.getElementById('audioFileNote');
-    if(el) el.innerHTML='ملف هذا الباب: <code>audio/'+Number(currentTopicId)+'.mp3</code>';
+    if(el) el.innerHTML='ملف هذا الباب: <code>'+Number(currentTopicId)+'.mp3</code>';
 }
 
 function playAudio() {
