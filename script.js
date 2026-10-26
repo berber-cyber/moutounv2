@@ -540,7 +540,12 @@ let fontSize = Number(localStorage.getItem('fontSize')) || 21;
 let quizTopicId = 0;
 let quizAnswerShown = false;
 let audioElement = null;
-const audioSources = {1:'/1.mp3', 2:'/2.mp3' ,3:'/3.mp3', 4:'/4.mp3'}; // أضف هنا روابط التسجيلات عند توفرها: {1:'audio/1.mp3', 2:'audio/2.mp3'}
+const audioSources = {
+    1: './1.mp3',
+    2: './2.mp3',
+    3: './3.mp3',
+    4: './4.mp3'
+};
 let repeatTarget = localStorage.getItem('repeatCount') === null ? 1 : Number(localStorage.getItem('repeatCount'));
 let repeatCurrent = 0;
 let repeatingAudio = false;
